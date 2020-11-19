@@ -7,13 +7,11 @@ import org.bukkit.ChatColor;
  */
 public class TimeUtil {
 
-    private static ChatColor timeColor = ChatColor.GRAY;
-
-    public void setTimeColor(ChatColor color) {
-        timeColor = color;
+    public static String formatHHMMSS(int secs) {
+        return formatHHMMSS(secs, ChatColor.GRAY);
     }
 
-    public static String formatHHMMSS(int secs) {
+    public static String formatHHMMSS(int secs, ChatColor timeColor) {
         if (secs < 3600) {
             int minutes = secs / 60,
                     seconds = secs % 60;
@@ -31,5 +29,4 @@ public class TimeUtil {
                     + (seconds < 10 ? "0" : "") + seconds;
         }
     }
-
 }

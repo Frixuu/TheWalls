@@ -13,7 +13,6 @@ import pl.grzegorz2047.thewalls.GameUser;
 import pl.grzegorz2047.thewalls.TheWalls;
 import pl.grzegorz2047.thewalls.api.playersclasses.CustomInventory;
 import pl.grzegorz2047.thewalls.api.util.CreateItemUtil;
-import pl.grzegorz2047.thewalls.api.util.ItemUtil;
 
 import java.util.HashMap;
 
@@ -193,31 +192,31 @@ public class ClassManager {
         Inventory standardPlayerAlchemyInventory = alchemyInventories.get("Gracz").getInventory();
         Inventory vipAlchemyInventory = alchemyInventories.get("Vip").getInventory();
 
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.BREWING_STAND, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.CAULDRON, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.WATER_BUCKET, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLASS_BOTTLE, 6));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.NETHER_WART, 3));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.MAGMA_CREAM, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.SUGAR, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLOWSTONE_DUST, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLISTERING_MELON_SLICE, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GHAST_TEAR, 1));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GUNPOWDER, 3));
-        standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.COOKED_BEEF, 12));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.BREWING_STAND, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.CAULDRON, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.WATER_BUCKET, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.GLASS_BOTTLE, 6));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.NETHER_WART, 3));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.MAGMA_CREAM, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.SUGAR, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.GLOWSTONE_DUST, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.GLISTERING_MELON_SLICE, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.GHAST_TEAR, 1));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.GUNPOWDER, 3));
+        standardPlayerAlchemyInventory.addItem(new ItemStack(Material.COOKED_BEEF, 12));
 
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.BREWING_STAND, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.CAULDRON, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.WATER_BUCKET, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLASS_BOTTLE, 6));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.NETHER_WART, 3));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.MAGMA_CREAM, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.SUGAR, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLOWSTONE_DUST, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GLISTERING_MELON_SLICE, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GHAST_TEAR, 1));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GUNPOWDER, 3));
-        vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.COOKED_BEEF, 12));
+        vipAlchemyInventory.addItem(new ItemStack(Material.BREWING_STAND, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.CAULDRON, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.WATER_BUCKET, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.GLASS_BOTTLE, 6));
+        vipAlchemyInventory.addItem(new ItemStack(Material.NETHER_WART, 3));
+        vipAlchemyInventory.addItem(new ItemStack(Material.MAGMA_CREAM, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.SUGAR, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.GLOWSTONE_DUST, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.GLISTERING_MELON_SLICE, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.GHAST_TEAR, 1));
+        vipAlchemyInventory.addItem(new ItemStack(Material.GUNPOWDER, 3));
+        vipAlchemyInventory.addItem(new ItemStack(Material.COOKED_BEEF, 12));
 
     }
 

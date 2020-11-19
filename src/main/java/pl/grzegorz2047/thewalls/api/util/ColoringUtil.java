@@ -8,24 +8,22 @@ import org.bukkit.entity.Player;
  */
 public class ColoringUtil {
 
-    public static void colorPlayerTab(Player p, String color) {
+    public static void colorPlayerTab(Player player, String color) {
         try {
-            p.setPlayerListName(color + p.getName());
+            player.setPlayerListName(color + player.getName());
         } catch (IllegalArgumentException e) {
-            char[] origin = p.getName().toCharArray();
+            char[] origin = player.getName().toCharArray();
             char[] newNick = "123456789012".toCharArray();
             String nPo = "";
             if (origin.length > 12) {
                 System.arraycopy(origin, 0, newNick, 0, 12);
                 nPo = String.copyValueOf(newNick);
             }
-            p.setPlayerListName(color + nPo);
+            player.setPlayerListName(color + nPo);
         }
     }
 
     public static String colorText(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
     }
-
-
 }
