@@ -13,12 +13,18 @@ import org.bukkit.inventory.ItemStack;
  */
 public class ChooseItemEvent extends Event implements Cancellable {
 
-    private final int slot;
-    private Player player;
-    private ItemStack clicked;
-    private InventoryView view;
+    private static final HandlerList handlers = new HandlerList();
 
-    public ChooseItemEvent(String title, int size, Inventory inventory, ItemStack clicked, Player p, int slot, InventoryView view) {
+    private final int slot;
+    private final Player player;
+    private final ItemStack clicked;
+    private final InventoryView view;
+    private final int size;
+    private final String title;
+    private boolean cancelled = false;
+    Inventory inventory;
+
+    public ChooseItemEvent(int size, Inventory inventory, ItemStack clicked, Player p, int slot, InventoryView view) {
         this.title = view.getTitle();
         this.size = size;
         this.inventory = inventory;
@@ -27,13 +33,6 @@ public class ChooseItemEvent extends Event implements Cancellable {
         this.slot = slot;
         this.view = view;
     }
-
-    private static final HandlerList handlers = new HandlerList();
-
-    private int size;
-    private String title;
-    private boolean cancelled = false;
-    Inventory inventory;
 
     public Player getPlayer() {
         return player;
@@ -52,10 +51,6 @@ public class ChooseItemEvent extends Event implements Cancellable {
     }
 
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 

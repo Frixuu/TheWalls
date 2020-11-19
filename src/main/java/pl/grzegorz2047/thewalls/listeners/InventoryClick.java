@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import pl.grzegorz2047.thewalls.TheWalls;
 import pl.grzegorz2047.thewalls.api.itemmenu.event.ChooseItemEvent;
 
 /**
@@ -14,19 +13,13 @@ import pl.grzegorz2047.thewalls.api.itemmenu.event.ChooseItemEvent;
  */
 public class InventoryClick implements Listener {
 
-
-    public InventoryClick() {
-    }
-
     @EventHandler
-    void clickEkwipunek(InventoryClickEvent e) {
+    void onInventoryClicked(InventoryClickEvent e) {
         Inventory inventory = e.getInventory();
-        ChooseItemEvent event = new ChooseItemEvent(e.getView().getTitle(), inventory.getSize(), inventory, e.getCurrentItem(), (Player) e.getWhoClicked(), e.getSlot(), e.getView());
+        ChooseItemEvent event = new ChooseItemEvent(inventory.getSize(), inventory, e.getCurrentItem(), (Player) e.getWhoClicked(), e.getSlot(), e.getView());
         Bukkit.getServer().getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             e.setCancelled(true);
         }
-
-
     }
 }
