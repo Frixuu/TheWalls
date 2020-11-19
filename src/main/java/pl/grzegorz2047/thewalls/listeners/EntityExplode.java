@@ -25,7 +25,6 @@ import java.util.Random;
  */
 public class EntityExplode implements Listener {
 
-
     private final Map<Material, BlockDrop> dropsMap;
     private TheWalls plugin;
 

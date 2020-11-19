@@ -21,11 +21,9 @@ import java.util.List;
  */
 public class PlayerChat implements Listener {
 
-
     private final HashMap<String, String> settings;
     private final GameData gameData;
     private GameUsers gameUsers;
-
 
     public PlayerChat(HashMap<String, String> settings, GameData gameData, GameUsers gameUsers) {
         this.settings = settings;
@@ -35,12 +33,10 @@ public class PlayerChat implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
-        if(CommandSanitizer.isDisallowedCommand(e.getMessage())) {
+        if (CommandSanitizer.isDisallowedCommand(e.getMessage())) {
             e.setCancelled(true);
         }
     }
-
-
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
@@ -101,7 +97,7 @@ public class PlayerChat implements Listener {
     }
 
     @EventHandler
-    public void onHint(PlayerChatTabCompleteEvent e) {
+    public void onTabComplete(PlayerChatTabCompleteEvent e) {
         e.getTabCompletions().clear();
     }
 }

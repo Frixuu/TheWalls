@@ -23,8 +23,8 @@ public class BlockBreak implements Listener {
     private final GameData gameData;
     private final MessageAPI messageManager;
     private final Map<Material, BlockDrop> dropsMap;
-    private GameUsers gameUsers;
-    private StorageProtection storageProtection;
+    private final GameUsers gameUsers;
+    private final StorageProtection storageProtection;
 
     public BlockBreak(GameData gameData, MessageAPI messageManager, Map<Material, BlockDrop> dropsMap, GameUsers gameUsers, StorageProtection storageProtection) {
         this.gameData = gameData;
@@ -57,7 +57,7 @@ public class BlockBreak implements Listener {
     }
 
     private void handleFurnaceProtection(BlockBreakEvent e, Player p, String username, GameUser user, String language, Location blockLocation) {
-        if(!storageProtection.hasOwner(blockLocation)) {
+        if (!storageProtection.hasOwner(blockLocation)) {
             return;
         }
         if (!storageProtection.isFurnaceOwner(username, blockLocation)) {
@@ -68,6 +68,4 @@ public class BlockBreak implements Listener {
             p.sendMessage(messageManager.getMessage(language, "thewalls.msg.furnacenolongerprotected"));
         }
     }
-
-
 }

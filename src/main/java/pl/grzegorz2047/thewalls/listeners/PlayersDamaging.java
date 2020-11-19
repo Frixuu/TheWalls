@@ -1,6 +1,5 @@
 package pl.grzegorz2047.thewalls.listeners;
 
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Egg;
@@ -20,9 +19,8 @@ import pl.grzegorz2047.thewalls.GameUsers;
  */
 public class PlayersDamaging implements Listener {
 
-
     private final GameData gameData;
-    private GameUsers gameUsers;
+    private final GameUsers gameUsers;
 
     public PlayersDamaging(GameData gameData, GameUsers gameUsers) {
         this.gameData = gameData;
@@ -30,7 +28,7 @@ public class PlayersDamaging implements Listener {
     }
 
     @EventHandler
-    public void przyDamagu(EntityDamageEvent e) {
+    public void onAnyEntityDamage(EntityDamageEvent e) {
         if (!gameData.isStatus(GameData.GameStatus.INGAME)) {
             e.setCancelled(true);
         }
@@ -98,10 +96,6 @@ public class PlayersDamaging implements Listener {
     }
 
     private boolean checkIfTheSameTeam(GameUser attackedUser, GameUser attackerUser) {
-        return attackedUser.
-                getAssignedTeam()
-                .equals(
-                        attackerUser.
-                                getAssignedTeam());
+        return attackedUser.getAssignedTeam().equals(attackerUser.getAssignedTeam());
     }
 }

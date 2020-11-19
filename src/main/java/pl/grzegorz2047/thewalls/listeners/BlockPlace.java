@@ -23,17 +23,18 @@ import java.util.List;
  */
 public class BlockPlace implements Listener {
 
-    private final GameData gameData;
+    private static final List<Material> blocksDeniedBeforeWallDrop
+        = Arrays.asList(Material.FIRE, Material.TNT, Material.PISTON_HEAD, Material.BEDROCK);
+
     private final Counter counter;
     private final MessageAPI messageManager;
-    private GameUsers gameUsers;
-    private StorageProtection storageProtection;
+    private final GameUsers gameUsers;
+    private final StorageProtection storageProtection;
 
     public BlockPlace(GameData gameData, MessageAPI messageManager, GameUsers gameUsers, StorageProtection storageProtection) {
-        this.gameData = gameData;
         this.gameUsers = gameUsers;
         this.storageProtection = storageProtection;
-        counter = this.gameData.getCounter();
+        counter = gameData.getCounter();
         this.messageManager = messageManager;
     }
 
@@ -41,15 +42,13 @@ public class BlockPlace implements Listener {
     public void onPlace(BlockPlaceEvent e) {
         Player player = e.getPlayer();
 
-        List<Material> list = Arrays.asList(Material.FIRE, Material.TNT, Material.PISTON_HEAD, Material.BEDROCK);
         Counter.CounterStatus counterStatus = counter.getStatus();
         Block block = e.getBlock();
         Material blockType = block.getType();
         Location blockLocation = block.getLocation();
         if (counterStatus.equals(Counter.CounterStatus.COUNTINGTODROPWALLS)) {
-
             String username = player.getName();
-            if (list.contains(blockType)) {
+            if (blocksDeniedBeforeWallDrop.contains(blockType)) {
                 GameUser user = gameUsers.getGameUser(username);
                 player.sendMessage(messageManager.getMessage(user.getLanguage(), "thewalls.msg.cantuseitnow"));
                 e.setCancelled(true);
@@ -63,19 +62,13 @@ public class BlockPlace implements Listener {
                 } else {
                     player.sendMessage(messageManager.getMessage(language, "thewalls.msg.furnacenotprotected"));
                 }
-                return;
             }
         } else if (!counterStatus.equals(Counter.CounterStatus.DEATHMATCH)) {
-            Entity ent = null;
             if (blockType == Material.TNT) {
-                ent = block.getWorld().spawn(block.getLocation(), TNTPrimed.class);
-                ((TNTPrimed) ent).setFuseTicks(20);
+                TNTPrimed tnt = block.getWorld().spawn(block.getLocation(), TNTPrimed.class);
+                tnt.setFuseTicks(20);
                 block.getWorld().createExplosion(blockLocation.getX(), blockLocation.getY(), blockLocation.getZ(), 1, true, false);
             }
         }
     }
-
-
-
-
 }

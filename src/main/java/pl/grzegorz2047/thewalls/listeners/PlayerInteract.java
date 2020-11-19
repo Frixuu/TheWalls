@@ -42,7 +42,6 @@ public class PlayerInteract implements Listener {
     private final Random r = new Random();
     private final List<Material> materialList = Arrays.asList(Material.ENDER_PEARL, Material.EXPERIENCE_BOTTLE, Material.GOLDEN_APPLE, Material.APPLE, Material.GOLD_INGOT, Material.IRON_INGOT, Material.OAK_WOOD);
 
-
     public PlayerInteract(GameData gameData, MessageAPI messageManager, Shop shopMenuManager, ClassManager classManager, StorageProtection storageProtection, GameUsers gameUsers, ScoreboardAPI scoreboardAPI) {
         this.gameData = gameData;
         this.messageManager = messageManager;
@@ -179,33 +178,30 @@ public class PlayerInteract implements Listener {
     }
 
     private List<ItemStack> generateChestContent() {
-        int pearl = 0;
+        int pearlsGenerated = 0;
         List<ItemStack> chestContent = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            //System.out.println("Losuje skrzynke!");
-            //System.out.println("Test Destroy box");
-            ItemStack itemstack1 = getRandomItemstack(pearl!= 0);
-            if (itemstack1.getType().equals(Material.ENDER_PEARL)) {
-                pearl++;
+            ItemStack item = getRandomItemstack(pearlsGenerated != 0);
+            if (item.getType().equals(Material.ENDER_PEARL)) {
+                pearlsGenerated++;
             }
-            chestContent.add(itemstack1);
-            //chest.getInventory().addItem(itemstack1);
-
-
+            chestContent.add(item);
         }
         return chestContent;
     }
 
+    /**
+     * Creates a new itemstack chosen randomly from the list of available materials.
+     * @param createEnderPearl If false, all ender pearls will be changed into some other item.
+     */
     private ItemStack getRandomItemstack(boolean createEnderPearl) {
         int index = r.nextInt(materialList.size() - 1);
         int amount = r.nextInt(3);
         amount += 1;
         Material mat = materialList.get(index);
-        if(mat.equals(Material.ENDER_PEARL) && !createEnderPearl) {
+        if (mat.equals(Material.ENDER_PEARL) && !createEnderPearl) {
             mat = Material.COOKED_BEEF;
         }
         return new ItemStack(mat, amount);
      }
-
-
 }
