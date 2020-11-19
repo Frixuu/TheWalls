@@ -7,16 +7,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scoreboard.Scoreboard;
-import pl.grzegorz2047.databaseapi.MoneyAPI;
 import pl.grzegorz2047.databaseapi.messages.MessageAPI;
 import pl.grzegorz2047.databaseapi.shop.Item;
 import pl.grzegorz2047.databaseapi.shop.ShopAPI;
 import pl.grzegorz2047.databaseapi.shop.Transaction;
-import pl.grzegorz2047.thewalls.GameData;
 import pl.grzegorz2047.thewalls.GameUser;
 import pl.grzegorz2047.thewalls.GameUsers;
 import pl.grzegorz2047.thewalls.api.itemmenu.event.ChooseItemEvent;
 import pl.grzegorz2047.thewalls.playerclass.ClassManager;
+import pl.grzegorz2047.thewalls.playerclass.PlayerClass;
 import pl.grzegorz2047.thewalls.scoreboard.ScoreboardAPI;
 import pl.grzegorz2047.thewalls.shop.Shop;
 
@@ -24,7 +23,6 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by grzeg on 21.05.2016.
@@ -73,34 +71,34 @@ public class ChooseItem implements Listener {
             case "Kits": {
                 e.setCancelled(true);
                 GameUser user = gameUsers.getGameUser(playerName);
-                ClassManager.CLASS kit;
+                PlayerClass kit;
                 ClassManager classManager = this.classManager;
-                HashMap<String, ClassManager.CLASS> playerClasses = classManager.getPlayerClasses();
+                HashMap<String, PlayerClass> playerClasses = classManager.getPlayerClasses();
 
                 switch (clickedType) {
                     case IRON_SWORD:
-                        playerClasses.put(playerName, ClassManager.CLASS.WOJOWNIK);
-                        kit = ClassManager.CLASS.WOJOWNIK;
+                        playerClasses.put(playerName, PlayerClass.WOJOWNIK);
+                        kit = PlayerClass.WOJOWNIK;
                         break;
                     case IRON_PICKAXE:
-                        playerClasses.put(playerName, ClassManager.CLASS.GORNIK);
-                        kit = ClassManager.CLASS.GORNIK;
+                        playerClasses.put(playerName, PlayerClass.GORNIK);
+                        kit = PlayerClass.GORNIK;
                         break;
                     case IRON_AXE:
-                        playerClasses.put(playerName, ClassManager.CLASS.DRWAL);
-                        kit = ClassManager.CLASS.DRWAL;
+                        playerClasses.put(playerName, PlayerClass.DRWAL);
+                        kit = PlayerClass.DRWAL;
                         break;
                     case COOKED_PORKCHOP:
-                        playerClasses.put(playerName, ClassManager.CLASS.KUCHARZ);
-                        kit = ClassManager.CLASS.KUCHARZ;
+                        playerClasses.put(playerName, PlayerClass.KUCHARZ);
+                        kit = PlayerClass.KUCHARZ;
                         break;
                     case POTION:
-                        playerClasses.put(playerName, ClassManager.CLASS.ALCHEMIK);
-                        kit = ClassManager.CLASS.ALCHEMIK;
+                        playerClasses.put(playerName, PlayerClass.ALCHEMIK);
+                        kit = PlayerClass.ALCHEMIK;
                         break;
                     case BOW:
-                        playerClasses.put(playerName, ClassManager.CLASS.LUCZNIK);
-                        kit = ClassManager.CLASS.LUCZNIK;
+                        playerClasses.put(playerName, PlayerClass.LUCZNIK);
+                        kit = PlayerClass.LUCZNIK;
                         break;
                     default:
                         return;
