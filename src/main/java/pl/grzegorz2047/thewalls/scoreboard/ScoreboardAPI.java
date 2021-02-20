@@ -48,8 +48,8 @@ public class ScoreboardAPI {
         healthObj.setDisplayName(" §c§l❤");
         p.setHealth(p.getHealth());
 
-        Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
-        tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        //Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
+        //tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         //addTabListEntry(scoreboard, p.getName(), " §7"); //color tablist?
 
         addEntry(scoreboard, objective, "§     ", "", 11);
@@ -85,8 +85,8 @@ public class ScoreboardAPI {
         p.setHealth(p.getHealth());
         p.damage(0);
 
-        Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
-        tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        //Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
+        //tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         //addTabListEntry(scoreboard, p.getName(), " §7"); //color tablist?
 
         addEntry(scoreboard, objective, "§§", "", 9);
@@ -141,8 +141,8 @@ public class ScoreboardAPI {
         String websiteInfo = this.messageManager.getMessage(user.getLanguage(), "scoreboard.website.address");
         addEntry(scoreboard, objective, websiteInfo, "", 0);
 
-        Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
-        tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        //Objective tablistobj = scoreboard.registerNewObjective("tablist", "dummy");
+        //tablistobj.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         createTeamTags(scoreboard);
         p.setScoreboard(scoreboard);
         refreshTags(p, gameUsers);
