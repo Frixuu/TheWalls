@@ -180,7 +180,7 @@ public class TheWalls extends JavaPlugin {
 
     private void registerListeners(PluginManager pluginManager, String loadedMotd, Map<Material, BlockDrop> dropsMap, ClassManager classManager, StorageProtection storageProtection) {
 
-        pluginManager.registerEvents(new PlayerJoin(gameData, this.bossBarExtension), this);
+        pluginManager.registerEvents(new PlayerJoin(gameData), this);
         pluginManager.registerEvents(new PlayerQuit(this, this.bossBarExtension, voter), this);
         pluginManager.registerEvents(new PlayerLogin(playerManager, gameData, messageManager), this);
         pluginManager.registerEvents(new EntityExplode(this, dropsMap), this);
