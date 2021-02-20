@@ -65,9 +65,13 @@ public class PlayerChat implements Listener {
             }
         }
 
-        String chatFormat = format.replace("{DISPLAYNAME}", displayName).replace("{MESSAGE}", message);
-        String chatFormatLang = chatFormat.replace("{LANG}", user.getLanguage());
-        e.setFormat(chatFormatLang);
+        var chatFormat = format.replace("{DISPLAYNAME}", displayName);
+        chatFormat = chatFormat.replace("{MESSAGE}", message);
+        chatFormat = chatFormat.replace("{LANG}", user.getLanguage());
+        final var teamPrefix = user.getAssignedTeam().getColor() + user.getAssignedTeam().toString();
+        chatFormat = chatFormat.replace("{TEAM}", teamPrefix);
+        e.setFormat(chatFormat);
+
         if (gameData.isStatus(GameData.GameStatus.INGAME)) {
             e.setCancelled(true);
             boolean isObserver = user.getAssignedTeam() == null;
@@ -75,7 +79,7 @@ public class PlayerChat implements Listener {
                 boolean isAdminRank = !hasStandardRank && !hasSpecialVipRank(userRank);
                 if (isAdminRank) {
                     for (Player pl : Bukkit.getOnlinePlayers()) {
-                        pl.sendMessage(chatFormatLang);
+                        pl.sendMessage(chatFormat);
                     }
 
                 }
@@ -86,10 +90,10 @@ public class PlayerChat implements Listener {
             for (Player pl : Bukkit.getOnlinePlayers()) {
                 if (recipent.contains(pl.getName()) || toGlobalChat) {
                     if (toGlobalChat) {
-                        String globalFormat = "§7[§bGLOBAL§7] " + chatFormatLang;
+                        String globalFormat = "§7[§bGLOBAL§7] " + chatFormat;
                         pl.sendMessage(globalFormat);
                     } else {
-                        pl.sendMessage(chatFormatLang);
+                        pl.sendMessage(chatFormat);
                     }
                 }
             }
