@@ -166,16 +166,19 @@ public class PlayerInteract implements Listener {
     }
 
 
-    private void handleRandomChestOpen(Player player, Block clickedBlock, Chest cb) {
-        if (!cb.getInventory().contains(Material.BEDROCK)) {
+    private void handleRandomChestOpen(Player player, Block clickedBlock, Chest chest) {
+        if (!chest.getInventory().contains(Material.BEDROCK)) {
             return;
         }
         List<ItemStack> chestContent = generateChestContent();
-        PlayerInventory inventory = player.getInventory(); // The player's inventory
-        chestContent.forEach(inventory::addItem);
+        final var playerInventory = player.getInventory();
+        chestContent.forEach(playerInventory::addItem);
         player.updateInventory();
-        cb.getInventory().clear();
+        chest.getInventory().clear();
         clickedBlock.setType(Material.AIR);
+
+        // The lack of space is intentional
+        player.sendMessage("§7[§cWalls§7]§aGratulacje, przedmioty ze skrzyni sa juz w twoim ekwipunku!");
     }
 
     private List<ItemStack> generateChestContent() {

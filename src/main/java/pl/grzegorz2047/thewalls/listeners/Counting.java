@@ -1,6 +1,7 @@
 package pl.grzegorz2047.thewalls.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +17,13 @@ import pl.grzegorz2047.thewalls.scoreboard.ScoreboardAPI;
 public class Counting implements Listener {
 
     private final ScoreboardAPI scoreboardAPI;
+    private final Server server;
     private GameUsers gameUsers;
 
     public Counting(ScoreboardAPI scoreboardAPI, GameUsers gameUsers) {
         this.scoreboardAPI = scoreboardAPI;
         this.gameUsers = gameUsers;
+        this.server = Bukkit.getServer();
     }
 
     @EventHandler
@@ -44,7 +47,7 @@ public class Counting implements Listener {
             }
             if (time < 6) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage("§7" + time + "...");
+                    p.sendMessage("§7[§cWalls§7] Pozostalo " + time + " sekund do rozpoczecia rozgrywki");
                 }
             }
         }
