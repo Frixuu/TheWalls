@@ -88,7 +88,7 @@ public class WorldManagement {
         String mapToLoad = "Walls_Mapa_" + randomised;
         String mainOutputWorldName = "walls_mapa";
         String destWorldPath = Bukkit.getWorldContainer().getAbsolutePath() + File.separator + mainOutputWorldName;
-        String scrFolder = "/home/mcserver/minigames/TheWalls/Mapy";
+        String scrFolder = settings.get("thewalls.map.path");
         try {
             FileUtils.deleteDirectory(new File(destWorldPath));
         } catch (IOException e) {
