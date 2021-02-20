@@ -185,7 +185,7 @@ public class TheWalls extends JavaPlugin {
         pluginManager.registerEvents(new PlayerLogin(playerManager, gameData, messageManager), this);
         pluginManager.registerEvents(new EntityExplode(this, dropsMap), this);
         pluginManager.registerEvents(new PlayerChat(settings, gameData, gameUsers), this);
-        pluginManager.registerEvents(new PlayerDead(gameData, this), this);
+        pluginManager.registerEvents(new PlayerDeath(gameData, this), this);
         pluginManager.registerEvents(new CounterEnd(this, classManager), this);
 
         pluginManager.registerEvents(new GeneralBlocking(gameData, messageManager, gameUsers), this);
