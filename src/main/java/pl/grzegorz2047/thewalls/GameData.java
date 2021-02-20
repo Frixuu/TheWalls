@@ -380,7 +380,7 @@ public class GameData {
             throw new RuntimeException("wrong number");
         }
 
-        private int getNumber() {
+        public int getNumber() {
             return this.number;
         }
 
