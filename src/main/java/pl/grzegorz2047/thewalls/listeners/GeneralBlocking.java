@@ -25,8 +25,7 @@ import pl.grzegorz2047.thewalls.GameUsers;
  */
 public class GeneralBlocking implements Listener {
 
-
-     private final GameData gameData;
+    private final GameData gameData;
     private final MessageAPI messageManager;
     private final Counter counter;
     private GameUsers gameUsers;
@@ -39,7 +38,7 @@ public class GeneralBlocking implements Listener {
     }
 
     @EventHandler
-    public void onHunger(FoodLevelChangeEvent e) {
+    public void onFoodLevelChange(FoodLevelChangeEvent e) {
         if (!gameData.isStatus(GameData.GameStatus.INGAME)) {
             e.setCancelled(true);
         }
@@ -58,7 +57,7 @@ public class GeneralBlocking implements Listener {
     }
 
     @EventHandler
-    public void tepEnderPearl(PlayerTeleportEvent e) {
+    public void onTeleportEnderPearl(PlayerTeleportEvent e) {
         if (counter.getStatus().equals(Counter.CounterStatus.COUNTINGTODROPWALLS)) {
             if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
                 Player p = e.getPlayer();
@@ -70,37 +69,32 @@ public class GeneralBlocking implements Listener {
     }
 
     @EventHandler
-    public void onSpawn(EntitySpawnEvent e) {
+    public void onEntitySpawn(EntitySpawnEvent e) {
         if (e.getEntity() instanceof LivingEntity) {
             e.setCancelled(false);
         }
     }
 
     @EventHandler
-    public void onSpawn(WeatherChangeEvent e) {
+    public void onWeatherChange(WeatherChangeEvent e) {
         e.setCancelled(true);
     }
 
     @EventHandler
-    public void onWOrld(WorldSaveEvent e) {
+    public void onWorldSave(WorldSaveEvent e) {
         System.out.println("Ktos zapisje? >:<");
     }
 
     @EventHandler
-    public void criczerSpawn(CreatureSpawnEvent e) {
-        System.out
-                .println("criczer spawn " + e.getSpawnReason().name());
+    public void onCreatureSpawn(CreatureSpawnEvent e) {
+        System.out.println("criczer spawn " + e.getSpawnReason().name());
         LivingEntity entity = e.getEntity();
         e.setCancelled(true);
     }
 
     @EventHandler
-    public void pre(AsyncPlayerPreLoginEvent e) {
-        System.out.println("Ktos loguje? >:<");
-    }
-    @EventHandler
     public void onPlayerSayStop(PlayerCommandPreprocessEvent e){
-        if(e.getMessage().equalsIgnoreCase("/stop") || e.getMessage().equalsIgnoreCase("stop")){
+        if (e.getMessage().equalsIgnoreCase("/stop") || e.getMessage().equalsIgnoreCase("stop")){
             /* Cancel execution of command */
             e.setCancelled(true);
             e.setMessage("Chyba cos cie boli!");
