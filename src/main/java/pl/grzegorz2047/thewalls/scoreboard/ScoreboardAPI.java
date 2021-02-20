@@ -245,9 +245,8 @@ public class ScoreboardAPI {
         Scoreboard scoreboard = p.getScoreboard();
         Objective sidebar = scoreboard.getObjective(DisplaySlot.SIDEBAR);
         String formattedTime = formatIntoHHMMSS(time);
-        int arenaNumber = (Bukkit.getPort() - 65) % 10;
         int maxPlayers = Bukkit.getMaxPlayers();
-        String displayName = "§a" + formattedTime + " §6TheWalls #" + arenaNumber + " §a" + numberOfPlayers + "/" + maxPlayers;
+        String displayName = "§a" + formattedTime + " §6§lTheWalls §r§a" + numberOfPlayers + "/" + maxPlayers;
         sidebar.setDisplayName(displayName);
     }
 
