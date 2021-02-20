@@ -68,7 +68,10 @@ public class PlayerChat implements Listener {
         var chatFormat = format.replace("{DISPLAYNAME}", displayName);
         chatFormat = chatFormat.replace("{MESSAGE}", message);
         chatFormat = chatFormat.replace("{LANG}", user.getLanguage());
-        final var teamPrefix = user.getAssignedTeam().getColor() + user.getAssignedTeam().toString();
+        final var hasTeam = user.getAssignedTeam() != null;
+        final var teamPrefix = hasTeam
+            ? "§7[" + user.getAssignedTeam().getColor() + user.getAssignedTeam().toString() + "§7]"
+            : "";
         chatFormat = chatFormat.replace("{TEAM}", teamPrefix);
         e.setFormat(chatFormat);
 
