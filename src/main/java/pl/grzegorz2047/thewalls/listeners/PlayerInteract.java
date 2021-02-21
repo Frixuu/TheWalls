@@ -1,14 +1,18 @@
 package pl.grzegorz2047.thewalls.listeners;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -25,11 +29,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static org.bukkit.Material.OAK_SIGN;
+import static org.bukkit.Material.SPRUCE_SIGN;
+import static pl.grzegorz2047.thewalls.GameData.GameStatus.INGAME;
 
 /**
  * Created by grzeg on 17.05.2016.
  */
 public class PlayerInteract implements Listener {
+
+    private static final List<Material> materialList = List.of(
+        Material.ENDER_PEARL,
+        Material.EXPERIENCE_BOTTLE,
+        Material.GOLDEN_APPLE,
+        Material.APPLE,
+        Material.GOLD_INGOT,
+        Material.IRON_INGOT,
+        Material.OAK_WOOD);
 
     private final GameData gameData;
     private final MessageAPI messageManager;
@@ -40,8 +60,8 @@ public class PlayerInteract implements Listener {
     private GameUsers gameUsers;
     private ScoreboardAPI scoreboardAPI;
     private final Random r = new Random();
-    private final List<Material> materialList = Arrays.asList(Material.ENDER_PEARL, Material.EXPERIENCE_BOTTLE, Material.GOLDEN_APPLE, Material.APPLE, Material.GOLD_INGOT, Material.IRON_INGOT, Material.OAK_WOOD);
-
+    private final Server server;
+    private final Logger logger;
 
     public PlayerInteract(GameData gameData, MessageAPI messageManager, Shop shopMenuManager, ClassManager classManager, StorageProtection storageProtection, GameUsers gameUsers, ScoreboardAPI scoreboardAPI) {
         this.gameData = gameData;
@@ -52,6 +72,8 @@ public class PlayerInteract implements Listener {
         counter = this.gameData.getCounter();
         this.shopMenuManager = shopMenuManager;
         this.classManager = classManager;
+        this.server = Bukkit.getServer();
+        this.logger = gameData.getPlugin().getLogger();
     }
 
     @EventHandler
@@ -69,12 +91,16 @@ public class PlayerInteract implements Listener {
             event.setCancelled(true);
             return;
         }
-        if (!gameData.isStatus(GameData.GameStatus.INGAME)) {
-            if (handleLobbyInteraction(event, player, itemInHandType)) return;
+
+        // If not in game, handle the lobby items
+        if (!gameData.isStatus(INGAME) && handleLobbyInteraction(event, player, itemInHandType)) {
+            return;
         }
 
+        if (handleIngameInteractions(event, player, itemInHandType, playerName, counterStatus)) {
+            return;
+        }
 
-        if (handleIngameInteractions(event, player, itemInHandType, playerName, counterStatus)) return;
         Block clickedBlock = event.getClickedBlock();
         if (clickedBlock == null) {
             return;
@@ -102,7 +128,7 @@ public class PlayerInteract implements Listener {
         GameUser user = gameUsers.getGameUser(playerName);
         String language = user.getLanguage();
         if (itemInHandType.equals(Material.NETHER_STAR)) {
-            if (!gameData.isStatus(GameData.GameStatus.INGAME)) {
+            if (!gameData.isStatus(INGAME)) {
                 player.sendMessage(messageManager.getMessage(language, "thewalls.shoponlyingame"));
                 return true;
             }
@@ -117,6 +143,79 @@ public class PlayerInteract implements Listener {
                 player.sendMessage(messageManager.getMessage(language, "thewalls.msg.cantplacelava"));
                 event.setCancelled(true);
                 return true;
+            }
+        }
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            try {
+                final var block = event.getClickedBlock();
+                Preconditions.checkNotNull(block);
+                final var blockY = block.getLocation().getBlockY();
+                final var material = block.getType();
+                if (blockY > 100 && blockY < 110 && block.getState() instanceof Sign) {
+                    logger.info("jest klikaned by " + player.getName());
+                    final var sign = (Sign)(block.getState());
+                    Preconditions.checkNotNull(sign);
+                    final var signLines = sign.getLines();
+                    final var lineSecond = signLines[1];
+                    final var lineThird = signLines[2];
+                    if (lineSecond.startsWith("§") && lineSecond.contains("ZESTAW") && lineThird.contains("§")) {
+                        String tier;
+                        switch (lineSecond.charAt(1)) {
+                            case 'f':
+                                tier = "Gracz";
+                                break;
+                            case '6':
+                                tier = "Vip";
+                                break;
+                            case 'b':
+                                tier = "SuperVip";
+                                break;
+                            default:
+                                logger.warning("Not a recognized kit tier: "
+                                    + String.join(";", signLines)
+                                    + ", "
+                                    + block.getLocation().toString());
+                                return false;
+                        }
+
+                        final var rank = user.getRank();
+                        if ((tier.equals("Vip") && rank.equals("Gracz")) ||
+                            (tier.equals("SuperVip") && (rank.equals("Gracz") || rank.equals("Vip")))) {
+                            player.sendMessage("§7[§cWalls§7] "
+                                + "§fTwoja ranga nie pozwala na uzycie tego zestawu! "
+                                + "Rangi dostepne na naszej stronie www.CraftGames.pl");
+                            return true;
+                        }
+
+                        ClassManager.CLASS kit;
+                        if (lineThird.contains("GORNIKA")) {
+                            kit = ClassManager.CLASS.GORNIK;
+                        } else if (lineThird.contains("DRWALA")) {
+                            kit = ClassManager.CLASS.DRWAL;
+                        } else if (lineThird.contains("LUCZNIKA")) {
+                            kit = ClassManager.CLASS.LUCZNIK;
+                        } else if (lineThird.contains("WOJOWNIKA")) {
+                            kit = ClassManager.CLASS.WOJOWNIK;
+                        } else if (lineThird.contains("ALCHEMIKA")) {
+                            kit = ClassManager.CLASS.ALCHEMIK;
+                        } else if (lineThird.contains("KUCHARZA")) {
+                            kit = ClassManager.CLASS.KUCHARZ;
+                        } else if (lineThird.contains("PIROMANA")) {
+                            // TODO KURWAAAAAAA
+                            kit = ClassManager.CLASS.DRWAL;
+                        } else {
+                            player.sendMessage("§cNie zdefiniowano kitu " + lineThird + "§c!");
+                            logger.warning("Unknown kit type: " + lineThird);
+                            return false;
+                        }
+
+                        classManager.givePlayerClass(player, user, kit, tier);
+                        // TELEPORT TO THE BOTTOM
+                        return true;
+                    }
+                }
+            } catch (Throwable ex) {
+                logger.warning(ex.toString());
             }
         }
         return false;

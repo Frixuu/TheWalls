@@ -547,9 +547,7 @@ public class GameData {
     }
 
     private void refreshScoreboardToAll(ScoreboardAPI scoreboardAPI) {
-        for (Player pl : Bukkit.getOnlinePlayers()) {
-            scoreboardAPI.refreshTags(pl, gameUsers);
-        }
+        Bukkit.getOnlinePlayers().forEach(pl -> scoreboardAPI.refreshTags(pl, gameUsers));
     }
 
 
@@ -675,5 +673,9 @@ public class GameData {
         } else {
             user.changeMoney(moneForWin * 2);
         }
+    }
+
+    public TheWalls getPlugin() {
+        return plugin;
     }
 }

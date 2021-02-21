@@ -38,7 +38,7 @@ public class ClassManager {
     public ClassManager(TheWalls plugin) {
         this.plugin = plugin;
         for (CLASS c : CLASS.values()) {
-            classInventory.put(c, new HashMap<String, CustomInventory>());
+            classInventory.put(c, new HashMap<>());
             classInventory.get(c).put("Gracz", new CustomInventory());
             classInventory.get(c).put("Vip", new CustomInventory());
         }
@@ -228,11 +228,19 @@ public class ClassManager {
         if (playerClass == null) {
             playerClass = ClassManager.CLASS.GORNIK;
         }
+        givePlayerClass(p, user, playerClass);
+    }
+
+    public void givePlayerClass(Player p, GameUser user, CLASS playerClass) {
         String kittype = "Gracz";
         if (!user.getRank().equals("Gracz")) {
             kittype = "Vip";
         }
-        for (ItemStack it : this.getClassInventory().get(playerClass).get(kittype).getInventory()) {
+        givePlayerClass(p, user, playerClass, kittype);
+    }
+
+    public void givePlayerClass(Player p, GameUser user, CLASS playerClass, String kitType) {
+        for (ItemStack it : this.getClassInventory().get(playerClass).get(kitType).getInventory()) {
             if (it != null) {
                 p.getInventory().addItem(it);
             }
