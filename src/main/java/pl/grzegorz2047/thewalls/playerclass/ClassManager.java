@@ -1,5 +1,6 @@
 package pl.grzegorz2047.thewalls.playerclass;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -240,12 +241,21 @@ public class ClassManager {
     }
 
     public void givePlayerClass(Player p, GameUser user, CLASS playerClass, String kitType) {
-        for (ItemStack it : this.getClassInventory().get(playerClass).get(kitType).getInventory()) {
+        final var inv = getClassInventory().get(playerClass).get(kitType);
+        Preconditions.checkNotNull(inv);
+        for (ItemStack it : inv.getInventory()) {
             if (it != null) {
                 p.getInventory().addItem(it);
             }
         }
-        p.sendMessage(messageManager.getMessage(user.getLanguage(), "thewalls.msg.classgiven").replace("{CLASS}", playerClass.name()));
+
+        var legacyKitName = playerClass.name().toLowerCase();
+        if (!kitType.equals("Gracz")) {
+            legacyKitName += kitType.toLowerCase();
+        }
+
+        p.sendMessage("§a" + p.getName() + " §3otrzymal zestaw §a" + legacyKitName + "§3.");
+        p.sendMessage("§3Otrzymales zestaw §a" + legacyKitName + "§3.");
     }
 
 }
