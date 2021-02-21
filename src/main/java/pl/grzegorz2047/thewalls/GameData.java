@@ -507,6 +507,7 @@ public class GameData {
 
         server.broadcastMessage("§7[§cWalls§7] Rozgrywka rozpoczeta. Powodzenia!");
         server.broadcastMessage("§7[§cWalls§7] Postaraj sie jak najszybciej zabrac przedmioty z poczatkowych skrzyni!");
+        server.broadcastMessage("§7[§cWalls§7] Pozostalo 10 minut do opadniecia scian!");
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerInventory userInventory = p.getInventory();

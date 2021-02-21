@@ -52,9 +52,6 @@ public class Counting implements Listener {
             }
         }
         if (status.equals(Counter.CounterStatus.COUNTINGTODROPWALLS)) {
-            if (time == 600) {
-                server.broadcastMessage("§7[§cWalls§7] Pozostalo 10 minut do opadniecia scian!");
-            }
             if (time == 300) {
                 server.broadcastMessage("§7[§cWalls§7] Pozostalo 5 minut do opadniecia scian!");
             }
