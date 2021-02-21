@@ -215,7 +215,7 @@ public class PlayerInteract implements Listener {
                     }
                 }
             } catch (Throwable ex) {
-                logger.warning(ex.toString());
+                ex.printStackTrace();
             }
         }
         return false;
