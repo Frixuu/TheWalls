@@ -67,6 +67,10 @@ public class Counting implements Listener {
             if (time == 20) {
                 server.broadcastMessage("§7[§cWalls§7] Pozostalo 20 sekund do opadniecia scian!");
             }
+            if (time > 0 && time < 11) {
+                server.getOnlinePlayers().forEach(p ->
+                    p.playSound(p.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 2, 1));
+            }
         }
         if (status.equals(Counter.CounterStatus.COUNTINGTODM)) {
             if (time == 300) {
@@ -76,9 +80,8 @@ public class Counting implements Listener {
                 server.broadcastMessage("§7[§cWalls§7]Pozostala 1 min. do Death Match'u");
             }
             if (time > 0 && time < 11) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 2, 1);
-                }
+                server.getOnlinePlayers().forEach(p ->
+                    p.playSound(p.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 2, 1));
             }
         }
         if (status.equals(Counter.CounterStatus.DEATHMATCH)) {
