@@ -38,7 +38,7 @@ public class Counting implements Listener {
         int time = e.getCounter().getTime();
         if (status.equals(Counter.CounterStatus.COUNTINGTOSTART)) {
             if (time == 10) {
-                Bukkit.broadcastMessage("§7[§cWalls§7] Pozostalo 10 sekund do rozpoczecia rozgrywki");
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 10 sekund do rozpoczecia rozgrywki");
             }
             if (time > 0 && time < 11) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
@@ -52,31 +52,28 @@ public class Counting implements Listener {
             }
         }
         if (status.equals(Counter.CounterStatus.COUNTINGTODROPWALLS)) {
+            if (time == 600) {
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 10 minut do opadniecia scian!");
+            }
             if (time == 300) {
-                //5 min
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 5 minut do opadniecia scian!");
             }
             if (time == 60) {
-                //60 sek
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 60 sekund do opadniecia scian!");
             }
             if (time == 30) {
-                // 30 sek
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 30 sekund do opadniecia scian!");
             }
-            if (time == 10) {
-                //10 sek
-            }
-            if (time > 0 && time < 11) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 2, 1);
-                    p.sendMessage("§7" + time + "...");
-                }
+            if (time == 20) {
+                server.broadcastMessage("§7[§cWalls§7] Pozostalo 20 sekund do opadniecia scian!");
             }
         }
         if (status.equals(Counter.CounterStatus.COUNTINGTODM)) {
             if (time == 300) {
-                //5 min
+                server.broadcastMessage("§7[§cWalls§7]Pozostalo 5 min. do Death Match'u");
             }
             if (time == 60) {
-                //60 sek
+                server.broadcastMessage("§7[§cWalls§7]Pozostala 1 min. do Death Match'u");
             }
             if (time > 0 && time < 11) {
                 for (Player p : Bukkit.getOnlinePlayers()) {

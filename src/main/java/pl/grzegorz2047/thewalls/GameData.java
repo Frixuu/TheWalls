@@ -24,6 +24,7 @@ import java.util.*;
  */
 public class GameData {
     private final TheWalls plugin;
+    private final Server server;
 
     private final MessageAPI messageManager;
     private final HashMap<String, String> settings;
@@ -75,7 +76,7 @@ public class GameData {
         messageManager = plugin.getMessageManager();
 
         shopMenuManager = plugin.getShopMenuManager();
-
+        server = plugin.getServer();
 
     }
 
@@ -504,8 +505,8 @@ public class GameData {
         //ArenaStatus.setStatus(//ArenaStatus.Status.INGAME);
         this.worldManagement.setProtected(true);
 
-        String expGiveMsgPL = messageManager.getMessage("PL", "thewalls.exp.giveinfo");
-        String expGiveMsgEN = messageManager.getMessage("EN", "thewalls.exp.giveinfo");
+        server.broadcastMessage("§7[§cWalls§7] Rozgrywka rozpoczeta. Powodzenia!");
+        server.broadcastMessage("§7[§cWalls§7] Postaraj sie jak najszybciej zabrac przedmioty z poczatkowych skrzyni!");
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerInventory userInventory = p.getInventory();
@@ -518,28 +519,20 @@ public class GameData {
 
             GameTeam assignedTeam = user.getAssignedTeam();
             Location startLocation = worldManagement.getStartLocation(assignedTeam);
-//            System.out.println(startLocation.getWorld().toString());
             p.teleport(startLocation);
             if (!userRank.equals("Gracz")) {
                 p.setLevel(5);
-                String userLanguage = user.getLanguage();
-                if (userLanguage.equals("PL")) {
-                    p.sendMessage(expGiveMsgPL);
-                } else if (userLanguage.equals("EN")) {
-                    p.sendMessage(expGiveMsgEN);
-                } else {
-                    String message = messageManager.getMessage(userLanguage, "thewalls.exp.giveinfo");
-                    p.sendMessage(message);
-                }
             }
             userInventory.addItem(new ItemStack(Material.LAPIS_ORE, 1));
             ItemStack netherStar = CreateItemUtil.createItem(Material.NETHER_STAR, "§6Sklep");
-            userInventory.setItem(8, netherStar);
+            userInventory.setItem(0, netherStar);
             scoreboardAPI.createIngameScoreboard(p, user);
             this.setStatus(GameStatus.INGAME);
-            //ArenaStatus.setStatus(//ArenaStatus.Status.INGAME);
-            shopMenuManager.givePermItems(p, user);
-            broadcastMessageToPlayer(p, "shop.givenpermitems");
+            server.getScheduler().runTaskLater(plugin, () -> {
+                shopMenuManager.givePermItems(p, user);
+                broadcastMessageToPlayer(p, "shop.givenpermitems");
+            }, 20 * 20L);
+
             classManager.givePlayerClass(p, user);
         }
         refreshScoreboardToAll(scoreboardAPI);
@@ -549,7 +542,6 @@ public class GameData {
     private void refreshScoreboardToAll(ScoreboardAPI scoreboardAPI) {
         Bukkit.getOnlinePlayers().forEach(pl -> scoreboardAPI.refreshTags(pl, gameUsers));
     }
-
 
     private void assignUnassigedToTeams(Player p, GameUser user) {
         GameTeam assignedTeam = user.getAssignedTeam();
