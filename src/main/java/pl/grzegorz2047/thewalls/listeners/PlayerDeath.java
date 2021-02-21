@@ -67,7 +67,7 @@ public class PlayerDeath implements Listener {
     private void handleNoKiller(PlayerDeathEvent event, Player killed, String killedPlayerName, World world) {
         final var cause = killed.getLastDamageCause();
         if (cause == null) {
-            event.setDeathMessage("§r" + killedPlayerName + " zginal!");
+            event.setDeathMessage("§r" + killedPlayerName + " zginal marnsmiercia!");
         } else {
             switch (cause.getCause()) {
                 case FIRE:
@@ -77,8 +77,18 @@ public class PlayerDeath implements Listener {
                 case LAVA:
                     event.setDeathMessage("§r" + killedPlayerName + " pomylil kolory i wskoczyl do lawy!");
                     break;
+                case PROJECTILE:
+                    event.setDeathMessage("§r" + killedPlayerName + " zginal po strzale Robin Hood'a!");
+                    break;
+                case FALL:
+                    event.setDeathMessage("§r" + killedPlayerName + " nie zdarzyl otworzyc spadochronu!");
+                    break;
+                case BLOCK_EXPLOSION:
+                case ENTITY_EXPLOSION:
+                    event.setDeathMessage("§r" + killedPlayerName + " poczul sie wybuchowo!");
+                    break;
                 default:
-                    event.setDeathMessage("§r" + killedPlayerName + " zginal!");
+                    event.setDeathMessage("§r" + killedPlayerName + " zginal marna smiercia!");
                     break;
             }
         }
