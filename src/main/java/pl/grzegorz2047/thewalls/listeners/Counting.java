@@ -37,6 +37,7 @@ public class Counting implements Listener {
         );*/
         int time = e.getCounter().getTime();
         if (status.equals(Counter.CounterStatus.COUNTINGTOSTART)) {
+            server.getOnlinePlayers().forEach(player -> player.setLevel(time));
             if (time == 10) {
                 server.broadcastMessage("§7[§cWalls§7] Pozostalo 10 sekund do rozpoczecia rozgrywki");
             }

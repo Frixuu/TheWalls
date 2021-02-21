@@ -532,8 +532,6 @@ public class GameData {
                 shopMenuManager.givePermItems(p, user);
                 broadcastMessageToPlayer(p, "shop.givenpermitems");
             }, 20 * 20L);
-
-            classManager.givePlayerClass(p, user);
         }
         refreshScoreboardToAll(scoreboardAPI);
         this.counter.start(Counter.CounterStatus.COUNTINGTODROPWALLS);

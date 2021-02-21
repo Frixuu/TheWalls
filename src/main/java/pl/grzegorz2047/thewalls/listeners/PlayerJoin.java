@@ -19,11 +19,10 @@ public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        if (e.getPlayer() == null) {
-            return;
-        }
         e.setJoinMessage(null);
         Player p = e.getPlayer();
+        p.setLevel(0);
+        p.setExp(0f);
         gameData.addPlayerToArena(p);
     }
 }

@@ -14,20 +14,27 @@ import java.util.Map;
  */
 public class GameLocationLoader {
 
-    private Map<GameData.GameTeam, Location> kitTeamSpawnLocations = new HashMap<>();
-    private Map<GameData.GameTeam, Location> teamSpawnLocations = new HashMap<>();
-    private Map<GameData.GameTeam, Location> dmTeamSpawnLocations = new HashMap<>();
+    private final Map<GameData.GameTeam, Location> kitTeamSpawnLocations = new HashMap<>();
+    private final Map<GameData.GameTeam, Location> teamSpawnLocations = new HashMap<>();
+    private final Map<GameData.GameTeam, Location> dmTeamSpawnLocations = new HashMap<>();
     private final HashMap<String, String> settings;
 
     public GameLocationLoader(HashMap<String, String> settings, String worldName) {
         this.settings = settings;
-        String spawnPath = "thewalls.spawns.team.";
+        final var spawnPath = "thewalls.spawns.team.";
+        final var logger = Bukkit.getLogger();
         for (int i = 1; i <= 4; i++) {
             try {
-                GameData.GameTeam fromNumber = GameData.GameTeam.fromNumber(i);
-                dmTeamSpawnLocations.put(fromNumber, getTeamDmSpawn(i, worldName));
-                teamSpawnLocations.put(fromNumber, getSpawn(worldName, settings.get(spawnPath + i)));
-                kitTeamSpawnLocations.put(fromNumber, getTeamKitSpawn(i, worldName));
+                final var team = GameData.GameTeam.fromNumber(i);
+                final var dmSpawn = getTeamDmSpawn(i, worldName);
+                logger.info("DM for team " + i + ": " + dmSpawn.toString());
+                dmTeamSpawnLocations.put(team, dmSpawn);
+                final var teamSpawn = getSpawn(worldName, settings.get(spawnPath + i));
+                logger.info("Spawn for team " + i + ": " + teamSpawn.toString());
+                teamSpawnLocations.put(team, teamSpawn);
+                final var kitSpawn = getTeamKitSpawn(i, worldName);
+                logger.info("Kit spawn for team " + i + ": " + kitSpawn.toString());
+                kitTeamSpawnLocations.put(team, kitSpawn);
             } catch (IncorrectDataStringException e) {
                 e.printStackTrace();
             }
