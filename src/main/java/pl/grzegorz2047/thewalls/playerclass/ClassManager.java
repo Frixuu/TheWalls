@@ -256,6 +256,10 @@ public class ClassManager {
 
         p.sendMessage("§a" + p.getName() + " §3otrzymal zestaw §a" + legacyKitName + "§3.");
         p.sendMessage("§3Otrzymales zestaw §a" + legacyKitName + "§3.");
+
+        final var team = user.getAssignedTeam();
+        p.teleport(plugin.getGameData().getWorldManagement().getStartLocation(team));
+        p.sendMessage("§3Teleportuje Cie do §ateam" + team.getNumber() + "§3.");
     }
 
 }

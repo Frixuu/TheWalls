@@ -519,8 +519,7 @@ public class GameData {
             assignUnassigedToTeams(p, user);
 
             GameTeam assignedTeam = user.getAssignedTeam();
-            Location startLocation = worldManagement.getStartLocation(assignedTeam);
-            p.teleport(startLocation);
+            p.teleport(worldManagement.getKitStartLocation(assignedTeam));
             if (!userRank.equals("Gracz")) {
                 p.setLevel(5);
             }
@@ -670,5 +669,9 @@ public class GameData {
 
     public TheWalls getPlugin() {
         return plugin;
+    }
+
+    public WorldManagement getWorldManagement() {
+        return worldManagement;
     }
 }

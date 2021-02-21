@@ -217,6 +217,10 @@ public class WorldManagement {
         return gameLocationLoader.getStartLocation(assignedTeam);
     }
 
+    public Location getKitStartLocation(GameData.GameTeam assignedTeam) {
+        return gameLocationLoader.getKitStartLocation(assignedTeam);
+    }
+
     public void teleportPlayersOnDeathMatch(GameUsers gameusers) {
         gameLocationLoader.teleportPlayersOnDeathMatch(gameusers);
     }

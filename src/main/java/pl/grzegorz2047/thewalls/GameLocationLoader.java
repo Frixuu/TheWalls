@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class GameLocationLoader {
 
+    private Map<GameData.GameTeam, Location> kitTeamSpawnLocations = new HashMap<>();
     private Map<GameData.GameTeam, Location> teamSpawnLocations = new HashMap<>();
     private Map<GameData.GameTeam, Location> dmTeamSpawnLocations = new HashMap<>();
     private final HashMap<String, String> settings;
@@ -26,10 +27,10 @@ public class GameLocationLoader {
                 GameData.GameTeam fromNumber = GameData.GameTeam.fromNumber(i);
                 dmTeamSpawnLocations.put(fromNumber, getTeamDmSpawn(i, worldName));
                 teamSpawnLocations.put(fromNumber, getSpawn(worldName, settings.get(spawnPath + i)));
+                kitTeamSpawnLocations.put(fromNumber, getTeamKitSpawn(i, worldName));
             } catch (IncorrectDataStringException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -41,9 +42,16 @@ public class GameLocationLoader {
         return teamSpawnLocations.get(team);
     }
 
+    public Location getKitStartLocation(GameData.GameTeam team) {
+        return kitTeamSpawnLocations.get(team);
+    }
 
     private Location getTeamDmSpawn(int i, String worldName) throws IncorrectDataStringException {
         return getSpawn(worldName, settings.get("thewalls.spawns.dm.team." + i));
+    }
+
+    private Location getTeamKitSpawn(int i, String worldName) throws IncorrectDataStringException {
+        return getSpawn(worldName, settings.get("thewalls.spawns.kitselect.team." + i));
     }
 
     public void teleportToDeathMatch(Player p, GameData.GameTeam assignedTeam) {
