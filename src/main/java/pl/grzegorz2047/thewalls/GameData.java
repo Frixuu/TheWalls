@@ -12,6 +12,7 @@ import pl.grzegorz2047.databaseapi.*;
 import pl.grzegorz2047.databaseapi.messages.MessageAPI;
 import pl.grzegorz2047.thewalls.api.util.*;
 import pl.grzegorz2047.thewalls.commands.vote.Voter;
+import pl.grzegorz2047.thewalls.listeners.PlayerInteract;
 import pl.grzegorz2047.thewalls.permissions.PermissionAttacher;
 import pl.grzegorz2047.thewalls.playerclass.ClassManager;
 import pl.grzegorz2047.thewalls.scoreboard.ScoreboardAPI;
@@ -152,6 +153,9 @@ public class GameData {
         } else {
             prepareSpectator(p, gameUser, scoreboardAPI);
         }
+        p.sendMessage("§3Witaj na serwerze TheWalls od §a§mCraftGames.pl§3!");
+        p.sendMessage("§a * §3Wiecej serwerow dostepne na §a§mwww.CraftGames.pl");
+        p.sendMessage("§a * §3Konto §6VIP §3oraz §bSuper§6BIP §3zakupisz na §a§mwww.CraftGames.pl");
         clearPlayerEffects(p);
     }
 
@@ -205,13 +209,8 @@ public class GameData {
         p.setLevel(0);
         p.setFlying(false);
         p.setAllowFlight(false);
-        inventory.setItem(0, CreateItemUtil.createItem(Material.GREEN_WOOL, 1, "§aZieloni"));
-        inventory.setItem(1, CreateItemUtil.createItem(Material.LIGHT_BLUE_WOOL, 1, "§bNiebiescy"));
-        inventory.setItem(2, CreateItemUtil.createItem(Material.RED_WOOL, 1, "§cCzerwoni"));
-        inventory.setItem(3, CreateItemUtil.createItem(Material.YELLOW_WOOL, 1, "§eŻółci"));
-        inventory.setItem(5, CreateItemUtil.createItem(Material.BOOK, 1, "§7Klasy"));
-
-        inventory.setItem(8, CreateItemUtil.createItem(Material.FEATHER, 1, "§cZmień Język/Language"));
+        inventory.setItem(0, new ItemStack(Material.BLAZE_ROD, 1));
+        inventory.setItem(1, new ItemStack(Material.REDSTONE_TORCH, 1));
     }
 
 
@@ -245,7 +244,7 @@ public class GameData {
             ColoringUtil.colorPlayerTab(killed, "§7");
             prepareSpectator(killed, gameUsers.getGameUser(killed.getName()), plugin.getScoreboardAPI());
             checkWinners();
-        }, 1l);
+        }, 1L);
         return killedPlayerName;
     }
 
@@ -422,25 +421,19 @@ public class GameData {
                 BungeeUtil.changeServer(plugin, p, "Lobby1");
                 p.kickPlayer("Arena przygotowuje sie do nowej gry! Restart!");
             }
-        }, 20l * 5);
+        }, 5 * 20L);
 
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             worldManagement.initNewWorld();
             initializeArrays();
             status = GameStatus.WAITING;
-
-        }, 20l * 10);
-        /*ArenaStatus.setStatus(ArenaStatus.Status.WAITING);
-        ArenaStatus.setLore(
-                "\n§7§l> §a1.7 - 1.10"
-        );*/
-
+        }, 10 * 20L);
     }
 
     private void initializeArrays() {
         for (GameTeam team : GameTeam.values()) {
-            teams.put(team, new ArrayList<String>());
+            teams.put(team, new ArrayList<>());
         }
     }
 
@@ -449,7 +442,6 @@ public class GameData {
         if (this.isStatus(GameStatus.WAITING)) {
             Calendar cal = Calendar.getInstance();
             int hour = cal.get(Calendar.HOUR_OF_DAY);
-//            System.out.println("Godzina jest " + hour);
             if (hour < 13 || hour > 21) {
                 this.minPlayers = Integer.parseInt(settings.get("thewalls.minplayersearly"));
             } else {
@@ -523,6 +515,8 @@ public class GameData {
             if (!userRank.equals("Gracz")) {
                 p.setLevel(5);
             }
+            PlayerInteract.generateChestContent().forEach(item ->
+                p.getInventory().addItem(item));
             userInventory.addItem(new ItemStack(Material.LAPIS_ORE, 1));
             ItemStack netherStar = CreateItemUtil.createItem(Material.NETHER_STAR, "§6Sklep");
             userInventory.setItem(0, netherStar);

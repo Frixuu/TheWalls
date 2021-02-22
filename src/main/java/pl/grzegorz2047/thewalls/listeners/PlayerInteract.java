@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import pl.grzegorz2047.databaseapi.messages.MessageAPI;
 import pl.grzegorz2047.thewalls.Counter;
 import pl.grzegorz2047.thewalls.GameData;
@@ -26,15 +25,10 @@ import pl.grzegorz2047.thewalls.scoreboard.ScoreboardAPI;
 import pl.grzegorz2047.thewalls.shop.Shop;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-import static org.bukkit.Material.OAK_SIGN;
-import static org.bukkit.Material.SPRUCE_SIGN;
 import static pl.grzegorz2047.thewalls.GameData.GameStatus.INGAME;
 
 /**
@@ -59,7 +53,7 @@ public class PlayerInteract implements Listener {
     private final StorageProtection storageProtection;
     private GameUsers gameUsers;
     private ScoreboardAPI scoreboardAPI;
-    private final Random r = new Random();
+    private static final Random random = new Random();
     private final Server server;
     private final Logger logger;
 
@@ -280,34 +274,26 @@ public class PlayerInteract implements Listener {
         player.sendMessage("§7[§cWalls§7]§aGratulacje, przedmioty ze skrzyni sa juz w twoim ekwipunku!");
     }
 
-    private List<ItemStack> generateChestContent() {
-        int pearl = 0;
-        List<ItemStack> chestContent = new ArrayList<>();
+    public static List<ItemStack> generateChestContent() {
+        int generatedPearls = 0;
+        List<ItemStack> contents = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            //System.out.println("Losuje skrzynke!");
-            //System.out.println("Test Destroy box");
-            ItemStack itemstack1 = getRandomItemstack(pearl!= 0);
-            if (itemstack1.getType().equals(Material.ENDER_PEARL)) {
-                pearl++;
+            ItemStack itemStack = getRandomItemstack(generatedPearls != 0);
+            if (itemStack.getType().equals(Material.ENDER_PEARL)) {
+                generatedPearls++;
             }
-            chestContent.add(itemstack1);
-            //chest.getInventory().addItem(itemstack1);
-
-
+            contents.add(itemStack);
         }
-        return chestContent;
+        return contents;
     }
 
-    private ItemStack getRandomItemstack(boolean createEnderPearl) {
-        int index = r.nextInt(materialList.size() - 1);
-        int amount = r.nextInt(3);
-        amount += 1;
+    private static ItemStack getRandomItemstack(boolean createEnderPearl) {
+        final int index = random.nextInt(materialList.size() - 1);
+        final int amount = random.nextInt(3) + 1;
         Material mat = materialList.get(index);
-        if(mat.equals(Material.ENDER_PEARL) && !createEnderPearl) {
+        if (mat.equals(Material.ENDER_PEARL) && !createEnderPearl) {
             mat = Material.COOKED_BEEF;
         }
         return new ItemStack(mat, amount);
      }
-
-
 }
