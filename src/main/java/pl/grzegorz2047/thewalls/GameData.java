@@ -207,7 +207,6 @@ public class GameData {
         p.setFlying(false);
         p.setAllowFlight(false);
         inventory.setItem(0, new ItemStack(Material.BLAZE_ROD, 1));
-        inventory.setItem(1, new ItemStack(Material.REDSTONE_TORCH, 1));
     }
 
 
