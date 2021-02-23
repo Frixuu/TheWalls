@@ -402,7 +402,6 @@ public class GameData {
             return;
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
-            //nikt nie wygral
             GameUser gameUser = gameUsers.getGameUser(p.getName());
             if (gameUser != null)
                 p.sendMessage(messageManager.getMessage(gameUser.getLanguage(), endMessage));
@@ -416,9 +415,8 @@ public class GameData {
         status = GameStatus.RESTARTING;
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                //nikt nie wygral
-                BungeeUtil.changeServer(plugin, p, "Lobby1");
-                p.kickPlayer("Arena przygotowuje sie do nowej gry! Restart!");
+                BungeeUtil.changeServer(plugin, p, "mainspawn");
+                //p.kickPlayer("Arena przygotowuje sie do nowej gry! Restart!");
             }
         }, 5 * 20L);
 
