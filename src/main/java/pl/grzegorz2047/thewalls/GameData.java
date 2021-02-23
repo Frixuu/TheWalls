@@ -560,7 +560,8 @@ public class GameData {
                     user.setAssignedTeam(GameTeam.TEAM4);
                 }
             } else {
-                if (teams.get(GameTeam.TEAM1).size() < this.maxTeamSize) {
+                var maxSize = teams.values().stream().map(ArrayList::size).max(Comparator.naturalOrder()).get();
+                if (teams.get(GameTeam.TEAM1).size() < maxSize) {
                     teams.get(GameTeam.TEAM1).add(playerName);
                     user.setAssignedTeam(GameTeam.TEAM1);
                 } else {
