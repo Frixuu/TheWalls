@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 import pl.grzegorz2047.databaseapi.messages.MessageAPI;
 import pl.grzegorz2047.thewalls.GameUser;
 import pl.grzegorz2047.thewalls.TheWalls;
@@ -42,6 +45,7 @@ public class ClassManager {
             classInventory.put(c, new HashMap<>());
             classInventory.get(c).put("Gracz", new CustomInventory());
             classInventory.get(c).put("Vip", new CustomInventory());
+            classInventory.get(c).put("SuperVip", new CustomInventory());
         }
         addGornikItems();
         addWojownikItems();
@@ -102,18 +106,20 @@ public class ClassManager {
         standardDiggerInventory.addItem(new ItemStack(Material.STONE_PICKAXE, 1));
         standardDiggerInventory.addItem(new ItemStack(Material.CHARCOAL, 8));
         standardDiggerInventory.addItem(new ItemStack(Material.TORCH, 8));
-        standardDiggerInventory.addItem(new ItemStack(Material.COOKED_BEEF, 5));
 
-
+        Inventory vipDiggerInventory = classInventory.get(CLASS.GORNIK).get("Vip").getInventory();
         ItemStack pickaxe = new ItemStack(Material.IRON_PICKAXE, 1);
         pickaxe.addEnchantment(Enchantment.DIG_SPEED, 1);
-        Inventory vipDiggerInventory = classInventory.get(CLASS.GORNIK).get("Vip").getInventory();
         vipDiggerInventory.addItem(pickaxe);
-        vipDiggerInventory.addItem(new ItemStack(Material.CHARCOAL, 16));
+        vipDiggerInventory.addItem(new ItemStack(Material.COAL, 16));
         vipDiggerInventory.addItem(new ItemStack(Material.TORCH, 16));
-        vipDiggerInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
 
-
+        Inventory svipDiggerInventory = classInventory.get(CLASS.GORNIK).get("SuperVip").getInventory();
+        ItemStack spickaxe = new ItemStack(Material.IRON_PICKAXE, 1);
+        spickaxe.addEnchantment(Enchantment.DIG_SPEED, 1);
+        svipDiggerInventory.addItem(pickaxe);
+        svipDiggerInventory.addItem(new ItemStack(Material.COAL, 32));
+        svipDiggerInventory.addItem(new ItemStack(Material.TORCH, 32));
     }
 
     private void addWojownikItems() {
@@ -130,6 +136,13 @@ public class ClassManager {
         vipFighterInventory.addItem(vipsword);
         vipFighterInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
         vipFighterInventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 4));
+
+        ItemStack svipsword = new ItemStack(Material.IRON_SWORD, 1);
+        svipsword.addEnchantment(Enchantment.DAMAGE_ALL, 2);
+        Inventory svipFighterInventory = classInventory.get(CLASS.WOJOWNIK).get("SuperVip").getInventory();
+        svipFighterInventory.addItem(vipsword);
+        svipFighterInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
+        svipFighterInventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 4));
     }
 
     private void addLucznikItems() {
@@ -148,6 +161,15 @@ public class ClassManager {
         vipBowmanInventory.addItem(new ItemStack(Material.LEATHER_HELMET, 1));
         vipBowmanInventory.addItem(new ItemStack(Material.LEATHER_BOOTS, 1));
 
+        ItemStack svipbow = new ItemStack(Material.BOW, 1);
+        svipbow.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
+        Inventory svipBowmanInventory = classInventory.get(CLASS.LUCZNIK).get("SuperVip").getInventory();
+        svipBowmanInventory.addItem(svipbow);
+        svipBowmanInventory.addItem(new ItemStack(Material.ARROW, 64));
+        svipBowmanInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
+        svipBowmanInventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+        svipBowmanInventory.addItem(new ItemStack(Material.LEATHER_HELMET, 1));
+        svipBowmanInventory.addItem(new ItemStack(Material.LEATHER_BOOTS, 1));
     }
 
     public void addDrwalItems() {
@@ -161,6 +183,12 @@ public class ClassManager {
         vipLumberjackInventory.addItem(new ItemStack(Material.OAK_WOOD, 32));
         vipLumberjackInventory.addItem(new ItemStack(Material.LADDER, 16));
         vipLumberjackInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
+
+        Inventory svipLumberjackInventory = classInventory.get(CLASS.DRWAL).get("SuperVip").getInventory();
+        svipLumberjackInventory.addItem(new ItemStack(Material.IRON_AXE, 1));
+        svipLumberjackInventory.addItem(new ItemStack(Material.OAK_WOOD, 32));
+        svipLumberjackInventory.addItem(new ItemStack(Material.LADDER, 16));
+        svipLumberjackInventory.addItem(new ItemStack(Material.COOKED_BEEF, 10));
     }
 
     public void addKucharzItems() {
@@ -176,7 +204,7 @@ public class ClassManager {
         standardFoodInventory.addItem(new ItemStack(Material.CHARCOAL, 4));
 
         ItemStack vipsword = new ItemStack(Material.IRON_SWORD, 1);
-        sword.addEnchantment(Enchantment.KNOCKBACK, 2);
+        vipsword.addEnchantment(Enchantment.KNOCKBACK, 2);
         Inventory vipFoodInventory = classInventory.get(CLASS.KUCHARZ).get("Vip").getInventory();
         vipFoodInventory.addItem(vipsword);
         vipFoodInventory.addItem(new ItemStack(Material.CAKE, 1));
@@ -185,12 +213,24 @@ public class ClassManager {
         vipFoodInventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 16));
         vipFoodInventory.addItem(new ItemStack(Material.FURNACE, 2));
         vipFoodInventory.addItem(new ItemStack(Material.CHARCOAL, 4));
+
+        ItemStack svipsword = new ItemStack(Material.IRON_SWORD, 1);
+        svipsword.addEnchantment(Enchantment.KNOCKBACK, 2);
+        Inventory svipFoodInventory = classInventory.get(CLASS.KUCHARZ).get("SuperVip").getInventory();
+        svipFoodInventory.addItem(vipsword);
+        svipFoodInventory.addItem(new ItemStack(Material.CAKE, 1));
+        svipFoodInventory.addItem(new ItemStack(Material.BREAD, 16));
+        svipFoodInventory.addItem(new ItemStack(Material.BEEF, 32));
+        svipFoodInventory.addItem(new ItemStack(Material.GOLDEN_APPLE, 16));
+        svipFoodInventory.addItem(new ItemStack(Material.FURNACE, 2));
+        svipFoodInventory.addItem(new ItemStack(Material.CHARCOAL, 4));
     }
 
     public void addAlchemikItems() {
         HashMap<String, CustomInventory> alchemyInventories = classInventory.get(CLASS.ALCHEMIK);
         Inventory standardPlayerAlchemyInventory = alchemyInventories.get("Gracz").getInventory();
         Inventory vipAlchemyInventory = alchemyInventories.get("Vip").getInventory();
+        Inventory svipAlchemyInventory = alchemyInventories.get("SuperVip").getInventory();
 
         standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.BREWING_STAND, 1));
         standardPlayerAlchemyInventory.addItem(CreateItemUtil.createItem(Material.CAULDRON, 1));
@@ -218,6 +258,14 @@ public class ClassManager {
         vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.GUNPOWDER, 3));
         vipAlchemyInventory.addItem(CreateItemUtil.createItem(Material.COOKED_BEEF, 12));
 
+        var potion1 = new Potion(PotionType.WEAKNESS, 1, true).toItemStack(1);
+        var potion2 = new Potion(PotionType.FIRE_RESISTANCE, 1, true).toItemStack(1);
+        var potion3 = new Potion(PotionType.INSTANT_HEAL, 1, false).toItemStack(1);
+        var potion4 = new Potion(PotionType.SPEED, 1, false).toItemStack(1);
+        svipAlchemyInventory.addItem(potion2);
+        svipAlchemyInventory.addItem(potion3);
+        svipAlchemyInventory.addItem(potion4);
+        svipAlchemyInventory.addItem(potion1);
     }
 
     public HashMap<String, CLASS> getPlayerClasses() {

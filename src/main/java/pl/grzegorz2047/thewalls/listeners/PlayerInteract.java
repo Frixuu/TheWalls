@@ -25,7 +25,9 @@ import pl.grzegorz2047.thewalls.scoreboard.ScoreboardAPI;
 import pl.grzegorz2047.thewalls.shop.Shop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -36,14 +38,26 @@ import static pl.grzegorz2047.thewalls.GameData.GameStatus.INGAME;
  */
 public class PlayerInteract implements Listener {
 
-    private static final List<Material> materialList = List.of(
-        Material.ENDER_PEARL,
-        Material.EXPERIENCE_BOTTLE,
-        Material.GOLDEN_APPLE,
-        Material.APPLE,
-        Material.GOLD_INGOT,
-        Material.IRON_INGOT,
-        Material.OAK_WOOD);
+    private static final Map<Material, Integer> materialList = new HashMap<>(15);
+
+    static {
+        materialList.put(Material.EMERALD, 2);
+        materialList.put(Material.IRON_HELMET, 1);
+        materialList.put(Material.IRON_BOOTS, 1);
+        materialList.put(Material.GOLDEN_APPLE, 2);
+        materialList.put(Material.ENDER_PEARL, 3);
+        materialList.put(Material.OAK_WOOD, 32);
+        materialList.put(Material.ARROW, 16);
+        materialList.put(Material.GOLDEN_CARROT, 5);
+        materialList.put(Material.DIAMOND, 1);
+        materialList.put(Material.TNT, 10);
+        materialList.put(Material.APPLE, 5);
+        materialList.put(Material.COOKED_COD, 5);
+        materialList.put(Material.WATER_BUCKET, 1);
+        materialList.put(Material.EXPERIENCE_BOTTLE, 5);
+        materialList.put(Material.GOLD_INGOT, 4);
+        materialList.put(Material.IRON_INGOT, 3);
+    }
 
     private final GameData gameData;
     private final MessageAPI messageManager;
@@ -197,8 +211,8 @@ public class PlayerInteract implements Listener {
                         } else if (lineThird.contains("KUCHARZA")) {
                             kit = ClassManager.CLASS.KUCHARZ;
                         } else if (lineThird.contains("PIROMANA")) {
-                            // TODO KURWAAAAAAA
-                            kit = ClassManager.CLASS.DRWAL;
+                            player.sendMessage("§cnie no §mkurwa§r§c bez przesady");
+                            return false;
                         } else {
                             player.sendMessage("§cNie zdefiniowano kitu " + lineThird + "§c!");
                             logger.warning("Unknown kit type: " + lineThird);
@@ -291,11 +305,12 @@ public class PlayerInteract implements Listener {
 
     private static ItemStack getRandomItemstack(boolean createEnderPearl) {
         final int index = random.nextInt(materialList.size() - 1);
-        final int amount = random.nextInt(3) + 1;
-        Material mat = materialList.get(index);
-        if (mat.equals(Material.ENDER_PEARL) && !createEnderPearl) {
-            mat = Material.COOKED_BEEF;
+        final var materialArray = materialList.entrySet().toArray(Map.Entry[]::new);
+        Material material = (Material) materialArray[index].getKey();
+        Integer amount = (Integer) materialArray[index].getValue();
+        if (material.equals(Material.ENDER_PEARL) && !createEnderPearl) {
+            material = Material.COOKED_BEEF;
         }
-        return new ItemStack(mat, amount);
+        return new ItemStack(material, amount);
      }
 }

@@ -71,8 +71,9 @@ public class TeamArg implements Arg {
                     user.setAssignedTeam(team);
                     gameData.addPlayerToTeam(username, team);
                     p.sendMessage(messageManager.getMessage(userLanguage, "thewalls.command.team.jointeamsuccess")
-                            .replace("{TEAM}", teamName).replace("{CURRENT}", teamSizeText)
-                            .replace("{MAX}", maxTeamSizeText));
+                        .replace("{TEAM}", teamName)
+                        .replace("{CURRENT}", String.valueOf(teamSize))
+                        .replace("{MAX}", maxTeamSizeText));
                 } else {
                     boolean isFull = teamSize >= maxTeamSize;
                     if (isFull) {
