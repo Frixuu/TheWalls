@@ -116,7 +116,7 @@ public class PlayersDamaging implements Listener {
         String log = "§7[§cWalls§7] §6" + damaged.getName() + " §4";
         for (int hp = 20; hp > 0; hp -= 2) {
             if (newHealth >= 2d) {
-                log += "♥";
+                log += "❤";
             } else if (newHealth > 0d) {
                 log += "♥";
             } else {
