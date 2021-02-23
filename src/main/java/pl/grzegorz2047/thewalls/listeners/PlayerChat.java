@@ -21,11 +21,9 @@ import java.util.List;
  */
 public class PlayerChat implements Listener {
 
-
     private final HashMap<String, String> settings;
     private final GameData gameData;
     private GameUsers gameUsers;
-
 
     public PlayerChat(HashMap<String, String> settings, GameData gameData, GameUsers gameUsers) {
         this.settings = settings;
@@ -35,12 +33,10 @@ public class PlayerChat implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
-        if(CommandSanitizer.isDisallowedCommand(e.getMessage())) {
+        if (CommandSanitizer.isDisallowedCommand(e.getMessage())) {
             e.setCancelled(true);
         }
     }
-
-
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
@@ -53,7 +49,12 @@ public class PlayerChat implements Listener {
         String userRank = user.getRank();
         String displayName = p.getDisplayName();
 
-        String format = settings.get("chat." + userRank.toLowerCase());
+        String format;
+        if (gameData.isStatus(GameData.GameStatus.INGAME)) {
+            format = settings.get("chat." + userRank.toLowerCase());
+        } else {
+            format = "{TEAM}§7{DISPLAYNAME}§7: §r{MESSAGE}";
+        }
         String message = e.getMessage().replace('%', ' ');
         boolean hasStandardRank = userRank.equals("Gracz");
         boolean toGlobalChat = false;
@@ -68,10 +69,7 @@ public class PlayerChat implements Listener {
         var chatFormat = format.replace("{DISPLAYNAME}", displayName);
         chatFormat = chatFormat.replace("{MESSAGE}", message);
         chatFormat = chatFormat.replace("{LANG}", user.getLanguage());
-        final var hasTeam = user.getAssignedTeam() != null;
-        final var teamPrefix = hasTeam
-            ? "§7[" + user.getAssignedTeam().getColor() + "Team " + user.getAssignedTeam().getNumber() + "§7]"
-            : "";
+        final var teamPrefix = GameData.GameTeam.getPrefix(user.getAssignedTeam());
         chatFormat = chatFormat.replace("{TEAM}", teamPrefix);
         e.setFormat(chatFormat);
 

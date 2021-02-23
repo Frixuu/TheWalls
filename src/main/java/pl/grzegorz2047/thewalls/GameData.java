@@ -379,6 +379,15 @@ public class GameData {
             throw new RuntimeException("wrong number");
         }
 
+        public static String getPrefix(GameTeam team) {
+            if (team != null) return team.getPrefix();
+            return "";
+        }
+
+        public String getPrefix() {
+            return "§7[" + getColor() + "Team " + getNumber() + "§7]";
+        }
+
         public int getNumber() {
             return this.number;
         }
