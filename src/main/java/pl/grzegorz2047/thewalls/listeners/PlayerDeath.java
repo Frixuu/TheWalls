@@ -81,7 +81,7 @@ public class PlayerDeath implements Listener {
                     event.setDeathMessage("§r" + killedPlayerName + " zginal po strzale Robin Hood'a!");
                     break;
                 case FALL:
-                    event.setDeathMessage("§r" + killedPlayerName + " nie zdarzyl otworzyc spadochronu!");
+                    event.setDeathMessage("§r" + killedPlayerName + " nie zdarzyl otworzyc spadocrhonu!");
                     break;
                 case BLOCK_EXPLOSION:
                 case ENTITY_EXPLOSION:
