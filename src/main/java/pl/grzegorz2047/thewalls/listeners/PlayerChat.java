@@ -53,7 +53,15 @@ public class PlayerChat implements Listener {
         if (gameData.isStatus(GameData.GameStatus.INGAME)) {
             format = settings.get("chat." + userRank.toLowerCase());
         } else {
-            format = "{TEAM}§7{DISPLAYNAME}§7: §r{MESSAGE}";
+            String rankPrefix;
+            String msgColor = "§r";
+            if (userRank.equals("Gracz")) {
+                rankPrefix = "";
+            } else if (userRank.equals("Admin")) {
+                rankPrefix = "§7[§4Admin§7]";
+                msgColor = "§6";
+            }
+            format = rankPrefix + "§7{DISPLAYNAME}§7: " + msgColor + "{MESSAGE}";
         }
         String message = e.getMessage().replace('%', ' ');
         boolean hasStandardRank = userRank.equals("Gracz");
