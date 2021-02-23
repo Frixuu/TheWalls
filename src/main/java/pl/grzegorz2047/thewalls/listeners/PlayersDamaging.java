@@ -20,7 +20,6 @@ import pl.grzegorz2047.thewalls.GameUsers;
  */
 public class PlayersDamaging implements Listener {
 
-
     private final GameData gameData;
     private GameUsers gameUsers;
 
@@ -49,6 +48,8 @@ public class PlayersDamaging implements Listener {
                 GameUser attackerUser = gameUsers.getGameUser(attacker.getName());
                 if (checkIfTheSameTeam(attackedUser, attackerUser)) {
                     event.setCancelled(true);
+                } else {
+                    sendCombatLog(attacker, attacked, attacked.getHealth() - event.getFinalDamage());
                 }
             }
         } else if (event.getDamager() instanceof Arrow) {
@@ -63,6 +64,8 @@ public class PlayersDamaging implements Listener {
                     GameUser attackerUser = gameUsers.getGameUser(attacker.getName());
                     if (checkIfTheSameTeam(attackedUser, attackerUser)) {
                         event.setCancelled(true);
+                    } else {
+                        sendCombatLog(attacker, attacked, attacked.getHealth() - event.getFinalDamage());
                     }
                     attacker.playSound(attacker.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
                 }
@@ -78,6 +81,8 @@ public class PlayersDamaging implements Listener {
                     GameUser attackerUser = gameUsers.getGameUser(attacker.getName());
                     if (checkIfTheSameTeam(attackedUser, attackerUser)) {
                         event.setCancelled(true);
+                    } else {
+                        sendCombatLog(attacker, attacked, attacked.getHealth() - event.getFinalDamage());
                     }
                 }
             }
@@ -91,6 +96,8 @@ public class PlayersDamaging implements Listener {
                     GameUser attackerUser = gameUsers.getGameUser(attacker.getName());
                     if (checkIfTheSameTeam(attackedUser, attackerUser)) {
                         event.setCancelled(true);
+                    } else {
+                        sendCombatLog(attacker, attacked, attacked.getHealth() - event.getFinalDamage());
                     }
                 }
             }
@@ -103,5 +110,22 @@ public class PlayersDamaging implements Listener {
                 .equals(
                         attackerUser.
                                 getAssignedTeam());
+    }
+
+    private void sendCombatLog(Player attacker, Player damaged, double newHealth) {
+        String log = "§7[§cWalls§7] §6" + damaged.getName() + " §4";
+        for (int hp = 20; hp > 0; hp -= 2) {
+            if (newHealth >= 2d) {
+                log += "♥";
+            } else if (newHealth > 0d) {
+                log += "♥";
+            } else {
+                log += "♡";
+            }
+            newHealth -= 2d;
+        }
+        for (int i = 0; i < 2; i++) {
+            attacker.sendMessage(log);
+        }
     }
 }
