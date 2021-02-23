@@ -672,4 +672,8 @@ public class GameData {
     public WorldManagement getWorldManagement() {
         return worldManagement;
     }
+
+    public GameUsers getGameUsers() {
+        return gameUsers;
+    }
 }

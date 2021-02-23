@@ -11,10 +11,13 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import pl.grzegorz2047.thewalls.GameData;
 import pl.grzegorz2047.thewalls.GameUser;
 import pl.grzegorz2047.thewalls.GameUsers;
+import pl.grzegorz2047.thewalls.RankUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import static pl.grzegorz2047.thewalls.RankUtils.getPrefixFromRankName;
 
 /**
  * Created by grzeg on 07.05.2016.
@@ -53,15 +56,11 @@ public class PlayerChat implements Listener {
         if (gameData.isStatus(GameData.GameStatus.INGAME)) {
             format = settings.get("chat." + userRank.toLowerCase());
         } else {
-            String rankPrefix = "";
             String msgColor = "§r";
-            if (userRank.equals("Gracz")) {
-                rankPrefix = "";
-            } else if (userRank.equals("Admin")) {
-                rankPrefix = "§7[§4Admin§7]";
+            if (userRank.equals("Admin")) {
                 msgColor = "§6";
             }
-            format = rankPrefix + "§7{DISPLAYNAME}§7: " + msgColor + "{MESSAGE}";
+            format = getPrefixFromRankName(userRank) + "§7{DISPLAYNAME}§7: " + msgColor + "{MESSAGE}";
         }
         String message = e.getMessage().replace('%', ' ');
         boolean hasStandardRank = userRank.equals("Gracz");

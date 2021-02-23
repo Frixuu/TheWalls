@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import pl.grzegorz2047.thewalls.GameData;
 import pl.grzegorz2047.thewalls.GameData.GameStatus;
+import pl.grzegorz2047.thewalls.RankUtils;
 
 import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.CUSTOM;
 import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.ENTITY_ATTACK;
@@ -58,9 +59,17 @@ public class PlayerDeath implements Listener {
         Material itemInHandType = itemInHand.getType();
         String itemInHandTypeName = itemInHandType.name();
         EntityDamageEvent.DamageCause damageCause = reason.getCause();
-        String killerName = killer.getName();
         if (damageCause == ENTITY_ATTACK || damageCause == CUSTOM || damageCause == PROJECTILE) {
-            e.setDeathMessage("§2✪ §a" + killerName + " §4✖ §c" + killedPlayerName + " §6§l⚔ §7" + itemInHandTypeName);
+            final var gameUsers = gameData.getGameUsers();
+            final var killerUser = gameUsers.getGameUser(killer.getName());
+            final var killerRank = RankUtils.getPrefixFromRankName(killerUser.getRank());
+            final var killerTeam = GameData.GameTeam.getPrefix(killerUser.getAssignedTeam());
+            final var killedUser = gameUsers.getGameUser(killed.getName());
+            final var killedRank = RankUtils.getPrefixFromRankName(killedUser.getRank());
+            final var killedTeam = GameData.GameTeam.getPrefix(killedUser.getAssignedTeam());
+            e.setDeathMessage(killedRank + killedTeam + "§r" + killed.getName()
+                + " §rzostal zabity przez" + killerRank + killerTeam + "§r" + killer.getName()
+                + " §r z " + itemInHandType.toString());
         }
     }
 
