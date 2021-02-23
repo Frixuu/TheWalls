@@ -154,7 +154,7 @@ public class GameData {
         }
         p.sendMessage("§3Witaj na serwerze TheWalls od §a§mCraftGames.pl§3!");
         p.sendMessage("§a * §3Wiecej serwerow dostepne na §a§mwww.CraftGames.pl");
-        p.sendMessage("§a * §3Konto §6VIP §3oraz §bSuper§6BIP §3zakupisz na §a§mwww.CraftGames.pl");
+        p.sendMessage("§a * §3Konto §6VIP §3oraz §bSuper§6VIP §3zakupisz na §a§mwww.CraftGames.pl");
         clearPlayerEffects(p);
     }
 
