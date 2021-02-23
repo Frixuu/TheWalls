@@ -32,11 +32,10 @@ public class StorageProtection {
         }
         String playerName = player.getName();
         if (protectedFurnacePlayer.get().equals(playerName)) {
+            player.sendMessage("§fTen §2Piec §fnalezy do §eCiebie.");
             return true;
         }
-        GameUser user = gameUsers.getGameUser(playerName);
-        String userLanguage = user.getLanguage();
-        player.sendMessage(messageManager.getMessage(userLanguage, "thewalls.msg.someonesprotectedfurnace"));
+        player.sendMessage("§cTen Piec jest zablokowany magicznym zakleciem");
         return false;
     }
 

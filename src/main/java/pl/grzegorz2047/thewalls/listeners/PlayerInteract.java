@@ -99,13 +99,15 @@ public class PlayerInteract implements Listener {
         if (clickedBlock == null) {
             return;
         }
+
+
+        Location blockLocation = clickedBlock.getLocation();
+        if (handleChestProtection(event, player, blockLocation)) return;
+
         if (!(clickedBlock.getState() instanceof Chest)) {
             return;
         }
         Chest state = (Chest) clickedBlock.getState();
-        Location blockLocation = clickedBlock.getLocation();
-        if (handleChestProtection(event, player, blockLocation)) return;
-
         handleRandomChestOpen(player, clickedBlock, state);
     }
 
