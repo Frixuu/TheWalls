@@ -93,8 +93,10 @@ public class TeamArg implements Arg {
                         user.setAssignedTeam(team);
                         gameData.addPlayerToTeam(username, team);
                         p.sendMessage(messageManager.getMessage(userLanguage, "thewalls.command.team.jointeamsuccess")
-                                .replace("{TEAM}", teamName).replace("{CURRENT}", teamSizeText)
-                                .replace("{MAX}", maxTeamSizeText));
+                            .replace("{TEAM}", teamName)
+                            .replace("{TEAMNR}", String.valueOf(team.getNumber()))
+                            .replace("{CURRENT}", teamSizeText)
+                            .replace("{MAX}", maxTeamSizeText));
 
                     }
                     ColoringUtil.colorPlayerTab(p, team.getColor());

@@ -197,8 +197,6 @@ public class GameData {
 
     private void preparePlayer(Player p, ScoreboardAPI scoreboardAPI, GameUser gameUser) {
         scoreboardAPI.createWaitingScoreboard(p, gameUser);
-        String message = messageManager.getMessage(gameUser.getLanguage(), "thewalls.joininfo");
-        p.sendMessage(message);
         PlayerInventory inventory = p.getInventory();
         inventory.clear();
         inventory.setArmorContents(new ItemStack[4]);
@@ -571,6 +569,8 @@ public class GameData {
             }
             assignedTeam = user.getAssignedTeam();
             ColoringUtil.colorPlayerTab(p, assignedTeam.getColor());
+            p.sendMessage("§7[§cWalls§7] " + assignedTeam.getPrefix() + assignedTeam.getColor()
+                + "Nie wybrales druzyny na czas i zostales losowo przydzielony. Od teraz walczysz po stronie druzyny " + assignedTeam.getNumber() + "!");
         }
     }
 
