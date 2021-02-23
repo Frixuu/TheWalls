@@ -90,7 +90,21 @@ public class WorldManagement {
         String destWorldPath = Bukkit.getWorldContainer().getAbsolutePath() + File.separator + mainOutputWorldName;
         String scrFolder = settings.get("thewalls.map.path");
         try {
-            FileUtils.deleteDirectory(new File(destWorldPath));
+            // We don't simply delete the destWorldPath,
+            // because the world directory might have additional content inside it.
+            // Our use case was to add a random loot datapack.
+            FileUtils.deleteDirectory(new File(destWorldPath, "data"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "DIM-1"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "DIM1"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "playerdata"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "poi"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "region"));
+            FileUtils.deleteDirectory(new File(destWorldPath, "stats"));
+            new File(destWorldPath, "level.dat").delete();
+            new File(destWorldPath, "level.dat_mcr").delete();
+            new File(destWorldPath, "level.dat_old").delete();
+            new File(destWorldPath, "session.lock").delete();
+            new File(destWorldPath, "uid.dat").delete();
         } catch (IOException e) {
             e.printStackTrace();
         }
