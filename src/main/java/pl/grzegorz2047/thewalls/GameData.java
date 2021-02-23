@@ -1,6 +1,5 @@
 package pl.grzegorz2047.thewalls;
 
-import fr.xephi.authme.api.v3.AuthMeApi;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -450,10 +449,10 @@ public class GameData {
             if (isCrackersAuthme) {
                 int authedPlayers = 0;
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    boolean authenticated = AuthMeApi.getInstance().isAuthenticated(player);
-                    if (authenticated) {
+                    //boolean authenticated = AuthMeApi.getInstance().isAuthenticated(player);
+                    //if (authenticated) {
                         authedPlayers++;
-                    }
+                    //}
 
                 }
                 if (authedPlayers >= this.minPlayers) {
