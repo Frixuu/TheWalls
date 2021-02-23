@@ -57,7 +57,6 @@ public class PlayerDeath implements Listener {
         EntityDamageEvent reason = killed.getLastDamageCause();
         ItemStack itemInHand = killer.getItemInHand();
         Material itemInHandType = itemInHand.getType();
-        String itemInHandTypeName = itemInHandType.name();
         EntityDamageEvent.DamageCause damageCause = reason.getCause();
         if (damageCause == ENTITY_ATTACK || damageCause == CUSTOM || damageCause == PROJECTILE) {
             final var gameUsers = gameData.getGameUsers();
@@ -69,7 +68,7 @@ public class PlayerDeath implements Listener {
             final var killedTeam = GameData.GameTeam.getPrefix(killedUser.getAssignedTeam());
             e.setDeathMessage(killedRank + killedTeam + "§r" + killed.getName()
                 + " §rzostal zabity przez" + killerRank + killerTeam + "§r" + killer.getName()
-                + " §r z " + itemInHandType.toString());
+                + " §rz " + itemInHandType.toString());
         }
     }
 
