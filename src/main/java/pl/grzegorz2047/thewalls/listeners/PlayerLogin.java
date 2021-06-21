@@ -51,7 +51,7 @@ public class PlayerLogin implements Listener {
             }
         } else {
             if (userRank.equals("Gracz")) {
-                if ((Bukkit.getMaxPlayers() - Bukkit.getOnlinePlayers().size()) < 5) {
+                if ((Bukkit.getMaxPlayers() - Bukkit.getOnlinePlayers().size()) < 0) {
                     e.disallow(kickOtherResult, messageManager.getMessage(userLanguage, "thewalls.login.vipslots"));
                     return;
                 }
