@@ -92,15 +92,6 @@ public class GeneralBlocking implements Listener {
         e.setCancelled(true);
     }
 
-    @EventHandler
-    public void onPlayerSayStop(PlayerCommandPreprocessEvent e){
-        if (e.getMessage().equalsIgnoreCase("/stop") || e.getMessage().equalsIgnoreCase("stop")){
-            /* Cancel execution of command */
-            e.setCancelled(true);
-            e.setMessage("Chyba cos cie boli!");
-        }
-    }
-
     /*@EventHandler
     private void onViolation(PlayerViolationEvent e) {
         Player player = e.getPlayer();
