@@ -420,8 +420,8 @@ public class GameData {
         status = GameStatus.RESTARTING;
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                BungeeUtil.changeServer(plugin, p, "mainspawn");
-                //p.kickPlayer("Arena przygotowuje sie do nowej gry! Restart!");
+                //BungeeUtil.changeServer(plugin, p, "mainspawn");
+                p.kickPlayer("Arena przygotowuje sie do nowej gry! Restart!");
             }
         }, 5 * 20L);
 
