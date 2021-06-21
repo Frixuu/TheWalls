@@ -104,7 +104,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.8.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.logging.log4j:log4j-api:2.8.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: it.unimi.dsi:fastutil:8.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: fr.xephi:authme:5.6.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
