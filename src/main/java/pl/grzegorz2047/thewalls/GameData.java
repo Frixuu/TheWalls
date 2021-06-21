@@ -152,9 +152,9 @@ public class GameData {
         } else {
             prepareSpectator(p, gameUser, scoreboardAPI);
         }
-        p.sendMessage("§3Witaj na serwerze TheWalls od §a§mCraftGames.pl§3!");
-        p.sendMessage("§a * §3Wiecej serwerow dostepne na §a§mwww.CraftGames.pl");
-        p.sendMessage("§a * §3Konto §6VIP §3oraz §bSuper§6VIP §3zakupisz na §a§mwww.CraftGames.pl");
+        p.sendMessage("§3Witaj na serwerze TheWalls od §awalls.xveenix.pl§3!");
+        p.sendMessage("§a * §3Wiecej serwerow dostepne na §a§mwalls.xveenix.pl");
+        p.sendMessage("§a * §3Konto §6VIP §3oraz §bSuper§6VIP §3zakupisz na §a§mwalls.xveenix.pl");
         clearPlayerEffects(p);
     }
 

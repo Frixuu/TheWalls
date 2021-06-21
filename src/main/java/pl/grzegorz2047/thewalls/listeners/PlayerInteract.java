@@ -193,7 +193,7 @@ public class PlayerInteract implements Listener {
                             (tier.equals("SuperVip") && (rank.equals("Gracz") || rank.equals("Vip")))) {
                             player.sendMessage("§7[§cWalls§7] "
                                 + "§fTwoja ranga nie pozwala na uzycie tego zestawu! "
-                                + "Rangi dostepne na naszej stronie www.CraftGames.pl");
+                                + "Rangi dostepne na naszej stronie §mwalls.xveenix.pl");
                             return true;
                         }
 
