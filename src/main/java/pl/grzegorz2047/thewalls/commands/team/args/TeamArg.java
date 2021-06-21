@@ -80,7 +80,7 @@ public class TeamArg implements Arg {
                         p.sendMessage(messageManager.getMessage(userLanguage, "thewalls.command.team.fullteam"));
                         return;
                     } else {
-                        boolean isLessThanTwoTeamSize = numberOfPlayers < (maxTeamSize * 2);
+                        boolean isLessThanTwoTeamSize = numberOfPlayers < 3;
                         if (isLessThanTwoTeamSize) {
                             boolean isNotTeam1OrTeam2 = !(team.equals(GameData.GameTeam.TEAM1) || team.equals(GameData.GameTeam.TEAM2));
                             if (isNotTeam1OrTeam2) {
